@@ -16,7 +16,9 @@ namespace battleship
             "Destroyer","Patrol"};
         int[] length = { 5, 4, 3, 3, 2 };
         int PlayerNum = 2;
+        int wait = 0;
         int returnValue;
+        
         struct location
         {
             public int x_axis;
@@ -73,6 +75,7 @@ namespace battleship
             ship[] AllShip = new ship[5];
             Button[] GameButton = new Button[TotalGrid * 2];
             int index = 0;
+           
 
             //create player struct to set the game
             //create ship struct, for all player
@@ -105,33 +108,37 @@ namespace battleship
             {
                 for (int j = 0; j < BoardSize; j++)
                 {
+                    players[0].board[0,i,j] = '0';
+                    players[0].board[1, i, j] = '0';
+                    players[1].board[0, i, j] = '0';
+                    players[1].board[1, i, j] = '0';
+
                     GameButton[index].Location = new Point(120 + j * (ButtonSize + GapSize), 60 + i * (ButtonSize + GapSize));
                     GameButton[index + 49].Location = new Point(460 + j * (ButtonSize + GapSize), 60 + i * (ButtonSize + GapSize));
                     index++;
                 }
 
             }
-
-            //location newlocate;
-            //newlocate.x_axis = 0;
-            //newlocate.y_axis = 1;
-            //index = 10;
-            //          SetShip(players[0], 0, newlocate, -1, GameButton[10]);
-            LogText.Text = returnValue.ToString();
             for (int i = 0; i < 5; i++)
             {
                 LogText.Text = "Please choose location to locate your " + ShipName[i];
 
 
             }
-
+            //location newlocate;
+            //newlocate.x_axis = 0;
+            //newlocate.y_axis = 1;
+            //index = 10;
+            //          SetShip(players[0], 0, newlocate, -1, GameButton[10]);
+            LogText.Text = returnValue.ToString();
         }
 
-        //click button event
-        private void ButtonClick(object sender, EventArgs e)
+  
+        ////click button event
+        public void ButtonClick(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-//            LogText.Text = btn.Name + " clicked";
+//          LogText.Text = btn.Name + " clicked";
             returnValue = Convert.ToInt32(btn.Name);
         }
 
@@ -152,6 +159,7 @@ namespace battleship
             //direction variable 0 = horizontal, 1 = vertical
             int DierctionTemp;
             int index;
+
             char symbol = ShipName[ship][0];
             index = Translate(location);
 
@@ -170,19 +178,62 @@ namespace battleship
             {
                 DierctionTemp = direction;
             }
-            player.board[0, location.x_axis, location.y_axis] = symbol;
+            player.board[0, location.x_axis, location.y_axis] = IntToChar(ship);
             player.AllShip[ship].location.x_axis = location.x_axis;
             player.AllShip[ship].location.y_axis = location.y_axis;
             player.AllShip[ship].direction = DierctionTemp;
             GameButton.Text = symbol.ToString();
             LogText.Text = "setting success \n";
         }
+        private char IntToChar(int num)
+        {
+            char returnChar;
 
-        //private void Shot()
-        //{
+            switch (num)
+            {
+                case 1:
+                    returnChar = '1';
+                    break;
+                case 2:
+                    returnChar = '2';
+                    break;
+                case 3:
+                    returnChar = '3';
+                    break;
+                case 4:
+                    returnChar = '4';
+                    break;
+                case 5:
+                    returnChar = '5';
+                    break;
+                default:
+                    returnChar = '0';
+                    break;
+            }
+            return returnChar;
+        }
+        private void Shot(player[] player, int self, location locate)
+        {
+            int enemy = 0;
+            if (self == 0)
+            {
+                enemy = 1;
+            }
 
+            if (player[enemy].board[0, locate.x_axis, locate.y_axis] == '0')
+            {
+                player[self].board[1, locate.x_axis, locate.y_axis] = 'M';
+                player[enemy].board[0, locate.x_axis, locate.y_axis] = 'M';
+            }
+            else
+            {
+                player[self].board[1, locate.x_axis, locate.y_axis] = 'H';
+                player[enemy].board[0, locate.x_axis, locate.y_axis] = 'H';
+                player[enemy].TotalRemain--;
 
-        //}
+            }
+
+        }
 
 
         private void ExitBtn_Click(object sender, EventArgs e)
