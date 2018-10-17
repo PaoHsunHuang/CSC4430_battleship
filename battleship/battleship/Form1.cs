@@ -16,9 +16,9 @@ namespace battleship
             "Destroyer","Patrol"};
         int[] length = { 5, 4, 3, 3, 2 };
         int PlayerNum = 2;
-        int wait = 0;
         int returnValue;
-        
+        int BoardSize = 7;
+
         struct location
         {
             public int x_axis;
@@ -68,7 +68,7 @@ namespace battleship
         public void StartGame()
         {
             player[] players = new player[PlayerNum];
-            int BoardSize = 7;
+
             int TotalGrid = BoardSize * BoardSize;
             int GapSize = 5;
             int ButtonSize = 35;
@@ -125,11 +125,11 @@ namespace battleship
 
 
             }
-            //location newlocate;
-            //newlocate.x_axis = 0;
-            //newlocate.y_axis = 1;
-            //index = 10;
-            //          SetShip(players[0], 0, newlocate, -1, GameButton[10]);
+            location newlocate;
+            newlocate.x_axis = 0;
+            newlocate.y_axis = 1;
+            index = 10;
+            SetShip(players[0], 0, newlocate, -1, GameButton[10]);
             LogText.Text = returnValue.ToString();
         }
 
@@ -154,9 +154,12 @@ namespace battleship
 
         //setting ships for player
 
-        private void SetShip(player player, int ship, location location, int direction, Button GameButton)
+        private void SetShip(player player, int ship, location location, 
+                                        int direction, Button GameButton)
         {
-            //direction variable 0 = horizontal, 1 = vertical
+            //direction variable 0 = horizontal, 1 = vertical, 
+            //-1 control by radio button
+
             int DierctionTemp;
             int index;
 
@@ -183,12 +186,41 @@ namespace battleship
             player.AllShip[ship].location.y_axis = location.y_axis;
             player.AllShip[ship].direction = DierctionTemp;
             GameButton.Text = symbol.ToString();
+
             LogText.Text = "setting success \n";
         }
+
+        private int ValidLocation(player player, location locate, int direction, int ship)
+        {
+             
+            int valid = 1;
+            int x = locate.x_axis;
+            int y = locate.y_axis;
+            //direction variable 0 = horizontal, 1 = vertical, 
+            if (direction == 0)
+            {
+                if ((x + length[ship]) > BoardSize)
+                {
+                    valid = 0;
+                }
+
+            }
+            else
+            {
+                if ((y + length[ship]) > BoardSize)
+                {
+                    valid = 0;
+                }
+            }
+            if (player.board[0, locate.x_axis, locate.y_axis] != '0' ) { }
+
+            return valid;
+        }
+
         private char IntToChar(int num)
         {
             char returnChar;
-
+         
             switch (num)
             {
                 case 1:
