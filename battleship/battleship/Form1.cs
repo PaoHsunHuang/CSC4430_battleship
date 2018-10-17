@@ -57,7 +57,7 @@ namespace battleship
         {
             InitializeComponent();
         }
-        
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -75,7 +75,7 @@ namespace battleship
             ship[] AllShip = new ship[5];
             Button[] GameButton = new Button[TotalGrid * 2];
             int index = 0;
-           
+
 
             //create player struct to set the game
             //create ship struct, for all player
@@ -108,7 +108,7 @@ namespace battleship
             {
                 for (int j = 0; j < BoardSize; j++)
                 {
-                    players[0].board[0,i,j] = '0';
+                    players[0].board[0, i, j] = '0';
                     players[0].board[1, i, j] = '0';
                     players[1].board[0, i, j] = '0';
                     players[1].board[1, i, j] = '0';
@@ -127,34 +127,17 @@ namespace battleship
             }
             location newlocate;
             newlocate.x_axis = 0;
-            newlocate.y_axis = 1;
-            index = 10;
-            SetShip(players[0], 0, newlocate, -1, GameButton[10]);
-            LogText.Text = returnValue.ToString();
+            newlocate.y_axis = 3;
+
+            index = Translate(newlocate);
+            SetShip(players[0], 0, newlocate, -1, GameButton[index]);
+
         }
 
-  
-        ////click button event
-        public void ButtonClick(object sender, EventArgs e)
-        {
-            Button btn = sender as Button;
-//          LogText.Text = btn.Name + " clicked";
-            returnValue = Convert.ToInt32(btn.Name);
-        }
-
-        //enter a location, translate to index number
-        //(0,0) will be 0, (0,1) will be 7
-        private int Translate(location location)
-        {
-            int index;
-            index = location.x_axis + location.y_axis * 7;
-            return index;
-        }
 
 
         //setting ships for player
-
-        private void SetShip(player player, int ship, location location, 
+        private void SetShip(player player, int ship, location location,
                                         int direction, Button GameButton)
         {
             //direction variable 0 = horizontal, 1 = vertical, 
@@ -162,7 +145,7 @@ namespace battleship
 
             int DierctionTemp;
             int index;
-
+            int valid = 0;
             char symbol = ShipName[ship][0];
             index = Translate(location);
 
@@ -181,18 +164,30 @@ namespace battleship
             {
                 DierctionTemp = direction;
             }
+
+            valid = ValidLocation(player, location, DierctionTemp, ship);
+            if (valid == 1)
+            {
+
+                LogText.Text = "setting success \n";
+            }
+            else
+            {
+
+                LogText.Text = "setting fail \n";
+            }
             player.board[0, location.x_axis, location.y_axis] = IntToChar(ship);
             player.AllShip[ship].location.x_axis = location.x_axis;
             player.AllShip[ship].location.y_axis = location.y_axis;
             player.AllShip[ship].direction = DierctionTemp;
             GameButton.Text = symbol.ToString();
 
-            LogText.Text = "setting success \n";
+
         }
 
         private int ValidLocation(player player, location locate, int direction, int ship)
         {
-             
+
             int valid = 1;
             int x = locate.x_axis;
             int y = locate.y_axis;
@@ -212,17 +207,39 @@ namespace battleship
                     valid = 0;
                 }
             }
-            if (player.board[0, locate.x_axis, locate.y_axis] != '0' ) { }
+            if (player.board[0, locate.x_axis, locate.y_axis] != '0') { }
 
             return valid;
+        }
+
+
+
+        //click button event
+        public void ButtonClick(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            //          LogText.Text = btn.Name + " clicked";
+            returnValue = Convert.ToInt32(btn.Name);
+        }
+
+        //enter a location, translate to index number
+        //(0,0) will be 0, (0,1) will be 7
+        private int Translate(location location)
+        {
+            int index;
+            index = location.x_axis + location.y_axis * 7;
+            return index;
         }
 
         private char IntToChar(int num)
         {
             char returnChar;
-         
+
             switch (num)
             {
+                case 0:
+                    returnChar = '0';
+                    break;
                 case 1:
                     returnChar = '1';
                     break;
