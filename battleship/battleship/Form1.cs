@@ -15,21 +15,21 @@ namespace battleship
         string[] ShipName = {"Aircraft","Battleship","Submarine",
             "Destroyer","Patrol"};
         int[] length = { 5, 4, 3, 3, 2 };
-        int PlayerNum = 2;
-        int returnValue;
+        public int PlayerNum = 2;
         int BoardSize = 7;
-
-        struct location
+        int order = 0;
+        int index = 0;
+        //struct for locatoin.
+        public struct location
         {
             public int x_axis;
             public int y_axis;
-
         }
         //set the struct for the ships
         //include information about ships
         //location, name ,direction and remain
         //direction 0 = horizontal, 1 = vertical
-        struct ship
+        public struct ship
         {
             public int number;
             public string name;
@@ -46,12 +46,27 @@ namespace battleship
         //second board will show the hit or miss
         //second and third board show x,y axis
         //TotalRemain show how many ship player left
-        struct player
+        public class player
         {
+
             public char[,,] board;
             public ship[] AllShip;
             public int TotalRemain;
+
+            //public player()
+            //{
+
+            //    this.board = new char[2, 7, 7];
+            //    this.AllShip = new ship[5];
+            //    this.TotalRemain = 5 + 4 + 3 + 3 + 2;
+            //}
         }
+
+        static player[] players = new player[2];
+        int TotalGrid = 7 * 7;
+        static Button[] GameButton = new Button[49 * 2];
+
+
 
         public Form1()
         {
@@ -61,19 +76,22 @@ namespace battleship
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            StartGame();
+            Setting();
+
         }
 
-
-        public void StartGame()
+        //start shooting enemy
+        private void Attack()
         {
-            player[] players = new player[PlayerNum];
 
-            int TotalGrid = BoardSize * BoardSize;
+        }
+
+        //initial the variable
+        public void Setting()
+        {
+
             int GapSize = 5;
             int ButtonSize = 35;
-            ship[] AllShip = new ship[5];
-            Button[] GameButton = new Button[TotalGrid * 2];
             int index = 0;
 
 
@@ -81,9 +99,12 @@ namespace battleship
             //create ship struct, for all player
             for (int i = 0; i < PlayerNum; i++)
             {
+                players[i] = new player();
+
                 players[i].board = new char[2, BoardSize, BoardSize];
                 players[i].TotalRemain = 5 + 4 + 3 + 3 + 2;
                 players[i].AllShip = new ship[5];
+
                 for (int j = 0; j < 5; j++)
                 {
                     players[i].AllShip[j].number = j;
@@ -103,36 +124,42 @@ namespace battleship
                 this.Controls.Add(GameButton[i]);
             }
 
+
             //locate the button position
             for (int i = 0; i < BoardSize; i++)
             {
                 for (int j = 0; j < BoardSize; j++)
                 {
-                    players[0].board[0, i, j] = '0';
-                    players[0].board[1, i, j] = '0';
-                    players[1].board[0, i, j] = '0';
-                    players[1].board[1, i, j] = '0';
-
                     GameButton[index].Location = new Point(120 + j * (ButtonSize + GapSize), 60 + i * (ButtonSize + GapSize));
                     GameButton[index + 49].Location = new Point(460 + j * (ButtonSize + GapSize), 60 + i * (ButtonSize + GapSize));
+                   
                     index++;
                 }
-
             }
-            for (int i = 0; i < 5; i++)
-            {
-                LogText.Text = "Please choose location to locate your " + ShipName[i];
+            reset();  
 
-
-            }
-            location newlocate;
-            newlocate.x_axis = 0;
-            newlocate.y_axis = 2;
-
-            SetShip(players[0], 0, newlocate, 0, GameButton);
 
         }
 
+        //set board and button variable to initial
+        public void reset()
+        {
+            index = 0;
+            for (int i = 0; i < BoardSize; i++)
+            {
+                for (int j = 0; j < BoardSize; j++)
+                {
+                    players[0].board[0, i, j] = '?';
+                    players[0].board[1, i, j] = '?';
+                    players[1].board[0, i, j] = '?';
+                    players[1].board[1, i, j] = '?';
+                    GameButton[index].Text = players[0].board[0, i, j].ToString();
+                    index++;
+
+                }
+
+            }
+        }
 
 
         //setting ships for player
@@ -146,7 +173,6 @@ namespace battleship
             int index;
             int valid = 0;
             char symbol = ShipName[ship][0];
-
             index = Translate(location);
 
             if (direction == -1)
@@ -188,13 +214,32 @@ namespace battleship
                     }
 
                 }
-                LogText.Text = ShipName[ship] + " setting success \n";
-
+                LogText.Text = ShipName[ship] + " setting success \n\n\n";
+                order++;
+                if (order < 5)
+                {
+                    LogText.Text += "Choose location for " + ShipName[ship + 1];
+                }
+                else
+                {
+                    var result = MessageBox.Show("Is everything correct?", "Finish Setting", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        Attack();
+                    }
+                    else
+                    {
+                        order = 0;
+                        reset();
+                    }
+                }
             }
             else
             {
+                LogText.Text = ShipName[ship] + " setting fail \n\n\n";
+                LogText.Text += "please choose location for " + ShipName[ship] + " again";
 
-                LogText.Text = ShipName[ship] + " setting fail \n";
+
             }
 
         }
@@ -216,7 +261,7 @@ namespace battleship
                 {
                     for (int i = 0; i < length[ship]; i++)
                     {
-                        if (player.board[0, x + i, y] != '0')
+                        if (player.board[0, x + i, y] != '?')
                         {
                             valid = 0;
                         }
@@ -234,7 +279,7 @@ namespace battleship
                 {
                     for (int i = 0; i < length[ship]; i++)
                     {
-                        if (player.board[0, x, y + i] != '0')
+                        if (player.board[0, x, y + i] != '?')
                         {
                             valid = 0;
                         }
@@ -297,9 +342,22 @@ namespace battleship
         //click button event
         public void ButtonClick(object sender, EventArgs e)
         {
+
             Button btn = sender as Button;
+            int num;
             //          LogText.Text = btn.Name + " clicked";
-            returnValue = Convert.ToInt32(btn.Name);
+
+            location Currentlocate;
+            Currentlocate.x_axis = 0;
+            Currentlocate.y_axis = 0;
+            num = System.Convert.ToInt32(btn.Name);
+
+            Currentlocate.x_axis = num % BoardSize;
+            Currentlocate.y_axis = num / BoardSize;
+
+            SetShip(players[0], order, Currentlocate, -1, GameButton);
+
+
         }
 
         //enter a location, translate to index number
@@ -313,7 +371,7 @@ namespace battleship
 
         private char IntToChar(int num)
         {
-            char returnChar;
+            char returnChar = '0';
 
             switch (num)
             {
@@ -334,9 +392,6 @@ namespace battleship
                     break;
                 case 5:
                     returnChar = '5';
-                    break;
-                default:
-                    returnChar = '0';
                     break;
             }
             return returnChar;
