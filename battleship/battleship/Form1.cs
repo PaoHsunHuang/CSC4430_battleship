@@ -127,10 +127,9 @@ namespace battleship
             }
             location newlocate;
             newlocate.x_axis = 0;
-            newlocate.y_axis = 3;
+            newlocate.y_axis = 2;
 
-            index = Translate(newlocate);
-            SetShip(players[0], 0, newlocate, -1, GameButton[index]);
+            SetShip(players[0], 0, newlocate, 0, GameButton);
 
         }
 
@@ -138,7 +137,7 @@ namespace battleship
 
         //setting ships for player
         private void SetShip(player player, int ship, location location,
-                                        int direction, Button GameButton)
+                                        int direction, Button[] GameButton)
         {
             //direction variable 0 = horizontal, 1 = vertical, 
             //-1 control by radio button
@@ -147,6 +146,7 @@ namespace battleship
             int index;
             int valid = 0;
             char symbol = ShipName[ship][0];
+
             index = Translate(location);
 
             if (direction == -1)
@@ -168,20 +168,34 @@ namespace battleship
             valid = ValidLocation(player, location, DierctionTemp, ship);
             if (valid == 1)
             {
+                for (int i = 0; i < length[ship]; i++)
+                {
+                    if (DierctionTemp == 0)
+                    {
+                        player.board[0, location.x_axis + i, location.y_axis] = IntToChar(ship);
+                        player.AllShip[ship].location.x_axis = location.x_axis;
+                        player.AllShip[ship].location.y_axis = location.y_axis;
+                        player.AllShip[ship].direction = DierctionTemp;
+                        GameButton[index + i].Text = symbol.ToString();
+                    }
+                    else
+                    {
+                        player.board[0, location.x_axis, location.y_axis + i] = IntToChar(ship);
+                        player.AllShip[ship].location.x_axis = location.x_axis;
+                        player.AllShip[ship].location.y_axis = location.y_axis;
+                        player.AllShip[ship].direction = DierctionTemp;
+                        GameButton[index + i * 7].Text = symbol.ToString();
+                    }
 
-                LogText.Text = "setting success \n";
+                }
+                LogText.Text = ShipName[ship] + " setting success \n";
+
             }
             else
             {
 
-                LogText.Text = "setting fail \n";
+                LogText.Text = ShipName[ship] + " setting fail \n";
             }
-            player.board[0, location.x_axis, location.y_axis] = IntToChar(ship);
-            player.AllShip[ship].location.x_axis = location.x_axis;
-            player.AllShip[ship].location.y_axis = location.y_axis;
-            player.AllShip[ship].direction = DierctionTemp;
-            GameButton.Text = symbol.ToString();
-
 
         }
 
@@ -198,6 +212,16 @@ namespace battleship
                 {
                     valid = 0;
                 }
+                else
+                {
+                    for (int i = 0; i < length[ship]; i++)
+                    {
+                        if (player.board[0, x + i, y] != '0')
+                        {
+                            valid = 0;
+                        }
+                    }
+                }
 
             }
             else
@@ -206,12 +230,68 @@ namespace battleship
                 {
                     valid = 0;
                 }
+                else
+                {
+                    for (int i = 0; i < length[ship]; i++)
+                    {
+                        if (player.board[0, x, y + i] != '0')
+                        {
+                            valid = 0;
+                        }
+                    }
+                }
+
             }
-            if (player.board[0, locate.x_axis, locate.y_axis] != '0') { }
 
             return valid;
         }
 
+        //function to check is the fire location have ship or not
+        private void Shot(player[] player, int self, location locate)
+        {
+            int enemy = 0;
+            int shipType = 0;
+            if (self == 0)
+            {
+                enemy = 1;
+            }
+
+            if (player[enemy].board[0, locate.x_axis, locate.y_axis] == '0')
+            {
+                player[self].board[1, locate.x_axis, locate.y_axis] = 'M';
+                player[enemy].board[0, locate.x_axis, locate.y_axis] = 'M';
+            }
+            else
+            {
+                player[self].board[1, locate.x_axis, locate.y_axis] = 'H';
+                player[enemy].board[0, locate.x_axis, locate.y_axis] = 'H';
+                player[enemy].TotalRemain--;
+
+                switch (player[enemy].board[0, locate.x_axis, locate.y_axis])
+                {
+                    case 'A':
+                        shipType = 0;
+                        break;
+                    case 'B':
+                        shipType = 1;
+                        break;
+                    case 'S':
+                        shipType = 2;
+                        break;
+                    case 'D':
+                        shipType = 3;
+                        break;
+                    case 'P':
+                        shipType = 4;
+                        break;
+                }
+                player[enemy].AllShip[shipType].remain--;
+                if (player[enemy].AllShip[shipType].remain == 0)
+                {
+                    LogText.Text = ShipName[shipType] + " is sinked";
+                }
+            }
+        }
 
 
         //click button event
@@ -261,28 +341,7 @@ namespace battleship
             }
             return returnChar;
         }
-        private void Shot(player[] player, int self, location locate)
-        {
-            int enemy = 0;
-            if (self == 0)
-            {
-                enemy = 1;
-            }
 
-            if (player[enemy].board[0, locate.x_axis, locate.y_axis] == '0')
-            {
-                player[self].board[1, locate.x_axis, locate.y_axis] = 'M';
-                player[enemy].board[0, locate.x_axis, locate.y_axis] = 'M';
-            }
-            else
-            {
-                player[self].board[1, locate.x_axis, locate.y_axis] = 'H';
-                player[enemy].board[0, locate.x_axis, locate.y_axis] = 'H';
-                player[enemy].TotalRemain--;
-
-            }
-
-        }
 
 
         private void ExitBtn_Click(object sender, EventArgs e)
