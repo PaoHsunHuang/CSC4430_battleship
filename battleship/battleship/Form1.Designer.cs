@@ -37,6 +37,8 @@
             this.Vertical = new System.Windows.Forms.RadioButton();
             this.ExitBtn = new System.Windows.Forms.Button();
             this.enemyStats = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.EnemyRemain = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.MyS = new System.Windows.Forms.Label();
             this.MyD = new System.Windows.Forms.Label();
@@ -48,8 +50,16 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.EnemyRemain = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.EnemyS = new System.Windows.Forms.Label();
+            this.EnemyD = new System.Windows.Forms.Label();
+            this.EnemyB = new System.Windows.Forms.Label();
+            this.EnemyP = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.EnemyA = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.LogBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -136,14 +146,44 @@
             // 
             // enemyStats
             // 
+            this.enemyStats.Controls.Add(this.EnemyS);
+            this.enemyStats.Controls.Add(this.EnemyD);
+            this.enemyStats.Controls.Add(this.EnemyB);
+            this.enemyStats.Controls.Add(this.EnemyP);
+            this.enemyStats.Controls.Add(this.label6);
+            this.enemyStats.Controls.Add(this.label7);
+            this.enemyStats.Controls.Add(this.EnemyA);
+            this.enemyStats.Controls.Add(this.label9);
+            this.enemyStats.Controls.Add(this.label12);
+            this.enemyStats.Controls.Add(this.label16);
             this.enemyStats.Controls.Add(this.label2);
             this.enemyStats.Controls.Add(this.EnemyRemain);
             this.enemyStats.Location = new System.Drawing.Point(750, 12);
             this.enemyStats.Name = "enemyStats";
-            this.enemyStats.Size = new System.Drawing.Size(100, 124);
+            this.enemyStats.Size = new System.Drawing.Size(110, 307);
             this.enemyStats.TabIndex = 6;
             this.enemyStats.TabStop = false;
             this.enemyStats.Text = "Enemy Remain";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("PMingLiU", 12F);
+            this.label2.Location = new System.Drawing.Point(26, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(40, 16);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Total";
+            // 
+            // EnemyRemain
+            // 
+            this.EnemyRemain.AutoSize = true;
+            this.EnemyRemain.Font = new System.Drawing.Font("PMingLiU", 12F);
+            this.EnemyRemain.Location = new System.Drawing.Point(35, 54);
+            this.EnemyRemain.Name = "EnemyRemain";
+            this.EnemyRemain.Size = new System.Drawing.Size(16, 16);
+            this.EnemyRemain.TabIndex = 0;
+            this.EnemyRemain.Text = "0";
             // 
             // groupBox2
             // 
@@ -172,7 +212,7 @@
             this.MyS.Name = "MyS";
             this.MyS.Size = new System.Drawing.Size(14, 14);
             this.MyS.TabIndex = 14;
-            this.MyS.Text = "3";
+            this.MyS.Text = "0";
             // 
             // MyD
             // 
@@ -182,7 +222,7 @@
             this.MyD.Name = "MyD";
             this.MyD.Size = new System.Drawing.Size(14, 14);
             this.MyD.TabIndex = 15;
-            this.MyD.Text = "3";
+            this.MyD.Text = "0";
             // 
             // MyB
             // 
@@ -192,7 +232,7 @@
             this.MyB.Name = "MyB";
             this.MyB.Size = new System.Drawing.Size(14, 14);
             this.MyB.TabIndex = 13;
-            this.MyB.Text = "4";
+            this.MyB.Text = "0";
             // 
             // MyP
             // 
@@ -202,7 +242,7 @@
             this.MyP.Name = "MyP";
             this.MyP.Size = new System.Drawing.Size(14, 14);
             this.MyP.TabIndex = 16;
-            this.MyP.Text = "2";
+            this.MyP.Text = "0";
             // 
             // label10
             // 
@@ -232,7 +272,7 @@
             this.MyA.Name = "MyA";
             this.MyA.Size = new System.Drawing.Size(14, 14);
             this.MyA.TabIndex = 12;
-            this.MyA.Text = "5";
+            this.MyA.Text = "0";
             // 
             // label13
             // 
@@ -264,25 +304,105 @@
             this.label15.TabIndex = 9;
             this.label15.Text = "Destroyer";
             // 
-            // EnemyRemain
+            // EnemyS
             // 
-            this.EnemyRemain.AutoSize = true;
-            this.EnemyRemain.Font = new System.Drawing.Font("PMingLiU", 12F);
-            this.EnemyRemain.Location = new System.Drawing.Point(35, 54);
-            this.EnemyRemain.Name = "EnemyRemain";
-            this.EnemyRemain.Size = new System.Drawing.Size(24, 16);
-            this.EnemyRemain.TabIndex = 0;
-            this.EnemyRemain.Text = "17";
+            this.EnemyS.AutoSize = true;
+            this.EnemyS.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.EnemyS.Location = new System.Drawing.Point(71, 162);
+            this.EnemyS.Name = "EnemyS";
+            this.EnemyS.Size = new System.Drawing.Size(32, 14);
+            this.EnemyS.TabIndex = 24;
+            this.EnemyS.Text = "Live";
             // 
-            // label2
+            // EnemyD
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("PMingLiU", 12F);
-            this.label2.Location = new System.Drawing.Point(26, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Total";
+            this.EnemyD.AutoSize = true;
+            this.EnemyD.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.EnemyD.Location = new System.Drawing.Point(71, 202);
+            this.EnemyD.Name = "EnemyD";
+            this.EnemyD.Size = new System.Drawing.Size(32, 14);
+            this.EnemyD.TabIndex = 25;
+            this.EnemyD.Text = "Live";
+            // 
+            // EnemyB
+            // 
+            this.EnemyB.AutoSize = true;
+            this.EnemyB.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.EnemyB.Location = new System.Drawing.Point(71, 122);
+            this.EnemyB.Name = "EnemyB";
+            this.EnemyB.Size = new System.Drawing.Size(32, 14);
+            this.EnemyB.TabIndex = 23;
+            this.EnemyB.Text = "Live";
+            // 
+            // EnemyP
+            // 
+            this.EnemyP.AutoSize = true;
+            this.EnemyP.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.EnemyP.Location = new System.Drawing.Point(71, 242);
+            this.EnemyP.Name = "EnemyP";
+            this.EnemyP.Size = new System.Drawing.Size(32, 14);
+            this.EnemyP.TabIndex = 26;
+            this.EnemyP.Text = "Live";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.label6.Location = new System.Drawing.Point(6, 242);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(39, 14);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Patrol";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.label7.Location = new System.Drawing.Point(6, 162);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(65, 14);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Submarine";
+            // 
+            // EnemyA
+            // 
+            this.EnemyA.AutoSize = true;
+            this.EnemyA.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.EnemyA.Location = new System.Drawing.Point(71, 82);
+            this.EnemyA.Name = "EnemyA";
+            this.EnemyA.Size = new System.Drawing.Size(32, 14);
+            this.EnemyA.TabIndex = 22;
+            this.EnemyA.Text = "Live";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.label9.Location = new System.Drawing.Point(6, 82);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(48, 14);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Aircraft";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.label12.Location = new System.Drawing.Point(6, 122);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(63, 14);
+            this.label12.TabIndex = 18;
+            this.label12.Text = "Battleship";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.label16.Location = new System.Drawing.Point(6, 202);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(59, 14);
+            this.label16.TabIndex = 19;
+            this.label16.Text = "Destroyer";
             // 
             // Form1
             // 
@@ -334,6 +454,16 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label EnemyRemain;
+        private System.Windows.Forms.Label EnemyS;
+        private System.Windows.Forms.Label EnemyD;
+        private System.Windows.Forms.Label EnemyB;
+        private System.Windows.Forms.Label EnemyP;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label EnemyA;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label16;
     }
 }
 
