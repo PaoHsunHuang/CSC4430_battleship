@@ -80,10 +80,28 @@ namespace battleship
 
         }
 
-        //start shooting enemy
+        //start attacking enemy
         private void Attack()
         {
+            //set the avaliable button
+            for (int i = 0; i < TotalGrid; i++)
+            {
+                GameButton[i].Enabled = false;
+                GameButton[i + TotalGrid].Enabled = true;
+            }
 
+            char temp;
+            //copy board
+            for (int i = 0; i < BoardSize; i++)
+            {
+                for (int j = 0; j < BoardSize; j++)
+                {
+                    temp = players[0].board[0, i, j];
+                    players[1].board[0, i, j] = temp;
+                }
+
+            }
+            
         }
 
         //initial the variable
@@ -100,15 +118,14 @@ namespace battleship
             for (int i = 0; i < PlayerNum; i++)
             {
                 players[i] = new player();
-
                 players[i].board = new char[2, BoardSize, BoardSize];
-                players[i].TotalRemain = 5 + 4 + 3 + 3 + 2;
+  //              players[i].TotalRemain = 5 + 4 + 3 + 3 + 2;
                 players[i].AllShip = new ship[5];
 
                 for (int j = 0; j < 5; j++)
                 {
                     players[i].AllShip[j].number = j;
-                    players[i].AllShip[j].remain = length[j];
+//                    players[i].AllShip[j].remain = length[j];
                     players[i].AllShip[j].name = ShipName[j];
                 }
             }
@@ -118,10 +135,16 @@ namespace battleship
             {
                 GameButton[i] = new Button();
                 GameButton[i].Size = new Size(ButtonSize, ButtonSize);
-                GameButton[i].Text = i.ToString();
                 GameButton[i].Name = i.ToString();
-                GameButton[i].Click += new EventHandler(ButtonClick);
+                if (i < TotalGrid)
+                {
+                    GameButton[i].Click += new EventHandler(SetButton);
+                }
+                else {
+                    GameButton[i].Click += new EventHandler(AttackButton);
+                }
                 this.Controls.Add(GameButton[i]);
+
             }
 
 
@@ -131,11 +154,12 @@ namespace battleship
                 for (int j = 0; j < BoardSize; j++)
                 {
                     GameButton[index].Location = new Point(120 + j * (ButtonSize + GapSize), 60 + i * (ButtonSize + GapSize));
-                    GameButton[index + 49].Location = new Point(460 + j * (ButtonSize + GapSize), 60 + i * (ButtonSize + GapSize));
+                    GameButton[index + TotalGrid].Location = new Point(460 + j * (ButtonSize + GapSize), 60 + i * (ButtonSize + GapSize));
                    
                     index++;
                 }
             }
+
             reset();  
 
 
@@ -145,6 +169,8 @@ namespace battleship
         public void reset()
         {
             index = 0;
+            order = 0;
+            EnemyRemain.Text = "17";
             for (int i = 0; i < BoardSize; i++)
             {
                 for (int j = 0; j < BoardSize; j++)
@@ -153,17 +179,31 @@ namespace battleship
                     players[0].board[1, i, j] = '?';
                     players[1].board[0, i, j] = '?';
                     players[1].board[1, i, j] = '?';
-                    GameButton[index].Text = players[0].board[0, i, j].ToString();
+                    GameButton[index].Text = "?";
+                    GameButton[index + TotalGrid].Text = "?";
+                    GameButton[index].Enabled = true;
+                    GameButton[index + TotalGrid].Enabled = false;
+                    
                     index++;
 
                 }
-
             }
+
+            for (int i = 0; i < PlayerNum; i++)
+            {
+                players[i].TotalRemain = 5 + 4 + 3 + 3 + 2;
+
+                for (int j = 0; j < 5; j++)
+                {
+                    players[i].AllShip[j].remain = length[j];
+                }
+            }
+
         }
 
 
         //setting ships for player
-        private void SetShip(player player, int ship, location location,
+        private void SetShip(int player, int ship, location location,
                                         int direction, Button[] GameButton)
         {
             //direction variable 0 = horizontal, 1 = vertical, 
@@ -192,24 +232,27 @@ namespace battleship
             }
 
             valid = ValidLocation(player, location, DierctionTemp, ship);
+            //direction variable 0 = horizontal, 1 = vertical, 
+            //-1 control by radio button
+
             if (valid == 1)
             {
                 for (int i = 0; i < length[ship]; i++)
                 {
                     if (DierctionTemp == 0)
                     {
-                        player.board[0, location.x_axis + i, location.y_axis] = IntToChar(ship);
-                        player.AllShip[ship].location.x_axis = location.x_axis;
-                        player.AllShip[ship].location.y_axis = location.y_axis;
-                        player.AllShip[ship].direction = DierctionTemp;
+                        players[player].board[0, location.x_axis + i, location.y_axis] = symbol;
+                        players[player].AllShip[ship].location.x_axis = location.x_axis;
+                        players[player].AllShip[ship].location.y_axis = location.y_axis;
+                        players[player].AllShip[ship].direction = DierctionTemp;
                         GameButton[index + i].Text = symbol.ToString();
                     }
                     else
                     {
-                        player.board[0, location.x_axis, location.y_axis + i] = IntToChar(ship);
-                        player.AllShip[ship].location.x_axis = location.x_axis;
-                        player.AllShip[ship].location.y_axis = location.y_axis;
-                        player.AllShip[ship].direction = DierctionTemp;
+                        players[player].board[0, location.x_axis, location.y_axis + i] = symbol;
+                        players[player].AllShip[ship].location.x_axis = location.x_axis;
+                        players[player].AllShip[ship].location.y_axis = location.y_axis;
+                        players[player].AllShip[ship].direction = DierctionTemp;
                         GameButton[index + i * 7].Text = symbol.ToString();
                     }
 
@@ -244,7 +287,7 @@ namespace battleship
 
         }
 
-        private int ValidLocation(player player, location locate, int direction, int ship)
+        private int ValidLocation(int player, location locate, int direction, int ship)
         {
 
             int valid = 1;
@@ -261,7 +304,7 @@ namespace battleship
                 {
                     for (int i = 0; i < length[ship]; i++)
                     {
-                        if (player.board[0, x + i, y] != '?')
+                        if (players[player].board[0, x + i, y] != '?')
                         {
                             valid = 0;
                         }
@@ -279,7 +322,7 @@ namespace battleship
                 {
                     for (int i = 0; i < length[ship]; i++)
                     {
-                        if (player.board[0, x, y + i] != '?')
+                        if (players[player].board[0, x, y + i] != '?')
                         {
                             valid = 0;
                         }
@@ -292,30 +335,37 @@ namespace battleship
         }
 
         //function to check is the fire location have ship or not
-        private void Shot(player[] player, int self, location locate)
+        private void Shot(int self, location locate)
         {
             int enemy = 0;
             int shipType = 0;
+            int buttonNum = Translate(locate) + 49;
+            char ship;
+
             if (self == 0)
             {
                 enemy = 1;
             }
 
-            if (player[enemy].board[0, locate.x_axis, locate.y_axis] == '0')
+            if (players[enemy].board[0, locate.x_axis, locate.y_axis] == '?')
             {
-                player[self].board[1, locate.x_axis, locate.y_axis] = 'M';
-                player[enemy].board[0, locate.x_axis, locate.y_axis] = 'M';
+                players[self].board[1, locate.x_axis, locate.y_axis] = 'M';
+                players[enemy].board[0, locate.x_axis, locate.y_axis] = 'M';
+                GameButton[buttonNum].Text = "M";
+                LogText.Text = "You miss at [";
+                LogText.Text += locate.x_axis.ToString();
+                LogText.Text += ",";
+                LogText.Text += locate.y_axis.ToString();
+                LogText.Text += "]\n\n";
             }
             else
             {
-                player[self].board[1, locate.x_axis, locate.y_axis] = 'H';
-                player[enemy].board[0, locate.x_axis, locate.y_axis] = 'H';
-                player[enemy].TotalRemain--;
 
-                switch (player[enemy].board[0, locate.x_axis, locate.y_axis])
+                switch (players[enemy].board[0, locate.x_axis, locate.y_axis])
                 {
                     case 'A':
                         shipType = 0;
+//                        EnemyA.Text = (players[enemy].AllShip[shipType].remain - 1).ToString();
                         break;
                     case 'B':
                         shipType = 1;
@@ -330,23 +380,35 @@ namespace battleship
                         shipType = 4;
                         break;
                 }
-                player[enemy].AllShip[shipType].remain--;
-                if (player[enemy].AllShip[shipType].remain == 0)
+                players[enemy].AllShip[shipType].remain--;
+
+                LogText.Text = "You hit something at [";
+                LogText.Text += locate.x_axis.ToString();
+                LogText.Text += ",";
+                LogText.Text += locate.y_axis.ToString();
+                LogText.Text += "]\n\n";
+
+
+                if (players[enemy].AllShip[shipType].remain == 0)
                 {
-                    LogText.Text = ShipName[shipType] + " is sinked";
+                    LogText.Text += ShipName[shipType] + " is sinked";
                 }
+
+                players[self].board[1, locate.x_axis, locate.y_axis] = 'H';
+                players[enemy].board[0, locate.x_axis, locate.y_axis] = 'H';
+                players[enemy].TotalRemain--;
+                EnemyRemain.Text = players[enemy].TotalRemain.ToString();
+                GameButton[buttonNum].Text = "H";
             }
         }
 
 
-        //click button event
-        public void ButtonClick(object sender, EventArgs e)
+        //click button for set ship
+        public void SetButton(object sender, EventArgs e)
         {
 
             Button btn = sender as Button;
             int num;
-            //          LogText.Text = btn.Name + " clicked";
-
             location Currentlocate;
             Currentlocate.x_axis = 0;
             Currentlocate.y_axis = 0;
@@ -355,10 +417,30 @@ namespace battleship
             Currentlocate.x_axis = num % BoardSize;
             Currentlocate.y_axis = num / BoardSize;
 
-            SetShip(players[0], order, Currentlocate, -1, GameButton);
+           
+            SetShip(0, order, Currentlocate, -1, GameButton);
 
 
         }
+
+        //click button for attack
+        public void AttackButton(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            int num;
+            location Currentlocate;
+            Currentlocate.x_axis = 0;
+            Currentlocate.y_axis = 0;
+            num = System.Convert.ToInt32(btn.Name);
+            num -= TotalGrid;
+            Currentlocate.x_axis = num % BoardSize;
+            Currentlocate.y_axis = num / BoardSize;
+
+            btn.Enabled = false;
+            Shot(0,Currentlocate);
+
+        }
+
 
         //enter a location, translate to index number
         //(0,0) will be 0, (0,1) will be 7
@@ -402,6 +484,12 @@ namespace battleship
         private void ExitBtn_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void RestartBtn_Click(object sender, EventArgs e)
+        {
+            LogText.Text = "Reset Game";
+            reset();
         }
     }
 }
