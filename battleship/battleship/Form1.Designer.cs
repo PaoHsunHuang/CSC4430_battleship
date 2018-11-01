@@ -37,6 +37,16 @@
             this.Vertical = new System.Windows.Forms.RadioButton();
             this.ExitBtn = new System.Windows.Forms.Button();
             this.enemyStats = new System.Windows.Forms.GroupBox();
+            this.EnemyS = new System.Windows.Forms.Label();
+            this.EnemyD = new System.Windows.Forms.Label();
+            this.EnemyB = new System.Windows.Forms.Label();
+            this.EnemyP = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.EnemyA = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.EnemyRemain = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -50,16 +60,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.EnemyS = new System.Windows.Forms.Label();
-            this.EnemyD = new System.Windows.Forms.Label();
-            this.EnemyB = new System.Windows.Forms.Label();
-            this.EnemyP = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.EnemyA = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.LogBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -164,6 +164,106 @@
             this.enemyStats.TabIndex = 6;
             this.enemyStats.TabStop = false;
             this.enemyStats.Text = "Enemy Remain";
+            // 
+            // EnemyS
+            // 
+            this.EnemyS.AutoSize = true;
+            this.EnemyS.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.EnemyS.Location = new System.Drawing.Point(71, 162);
+            this.EnemyS.Name = "EnemyS";
+            this.EnemyS.Size = new System.Drawing.Size(32, 14);
+            this.EnemyS.TabIndex = 24;
+            this.EnemyS.Text = "Live";
+            // 
+            // EnemyD
+            // 
+            this.EnemyD.AutoSize = true;
+            this.EnemyD.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.EnemyD.Location = new System.Drawing.Point(71, 202);
+            this.EnemyD.Name = "EnemyD";
+            this.EnemyD.Size = new System.Drawing.Size(32, 14);
+            this.EnemyD.TabIndex = 25;
+            this.EnemyD.Text = "Live";
+            // 
+            // EnemyB
+            // 
+            this.EnemyB.AutoSize = true;
+            this.EnemyB.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.EnemyB.Location = new System.Drawing.Point(71, 122);
+            this.EnemyB.Name = "EnemyB";
+            this.EnemyB.Size = new System.Drawing.Size(32, 14);
+            this.EnemyB.TabIndex = 23;
+            this.EnemyB.Text = "Live";
+            // 
+            // EnemyP
+            // 
+            this.EnemyP.AutoSize = true;
+            this.EnemyP.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.EnemyP.Location = new System.Drawing.Point(71, 242);
+            this.EnemyP.Name = "EnemyP";
+            this.EnemyP.Size = new System.Drawing.Size(32, 14);
+            this.EnemyP.TabIndex = 26;
+            this.EnemyP.Text = "Live";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.label6.Location = new System.Drawing.Point(6, 242);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(39, 14);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Patrol";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.label7.Location = new System.Drawing.Point(6, 162);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(65, 14);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Submarine";
+            // 
+            // EnemyA
+            // 
+            this.EnemyA.AutoSize = true;
+            this.EnemyA.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.EnemyA.Location = new System.Drawing.Point(71, 82);
+            this.EnemyA.Name = "EnemyA";
+            this.EnemyA.Size = new System.Drawing.Size(32, 14);
+            this.EnemyA.TabIndex = 22;
+            this.EnemyA.Text = "Live";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.label9.Location = new System.Drawing.Point(6, 82);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(48, 14);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Aircraft";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.label12.Location = new System.Drawing.Point(6, 122);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(63, 14);
+            this.label12.TabIndex = 18;
+            this.label12.Text = "Battleship";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("PMingLiU", 10F);
+            this.label16.Location = new System.Drawing.Point(6, 202);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(59, 14);
+            this.label16.TabIndex = 19;
+            this.label16.Text = "Destroyer";
             // 
             // label2
             // 
@@ -303,106 +403,6 @@
             this.label15.Size = new System.Drawing.Size(59, 14);
             this.label15.TabIndex = 9;
             this.label15.Text = "Destroyer";
-            // 
-            // EnemyS
-            // 
-            this.EnemyS.AutoSize = true;
-            this.EnemyS.Font = new System.Drawing.Font("PMingLiU", 10F);
-            this.EnemyS.Location = new System.Drawing.Point(71, 162);
-            this.EnemyS.Name = "EnemyS";
-            this.EnemyS.Size = new System.Drawing.Size(32, 14);
-            this.EnemyS.TabIndex = 24;
-            this.EnemyS.Text = "Live";
-            // 
-            // EnemyD
-            // 
-            this.EnemyD.AutoSize = true;
-            this.EnemyD.Font = new System.Drawing.Font("PMingLiU", 10F);
-            this.EnemyD.Location = new System.Drawing.Point(71, 202);
-            this.EnemyD.Name = "EnemyD";
-            this.EnemyD.Size = new System.Drawing.Size(32, 14);
-            this.EnemyD.TabIndex = 25;
-            this.EnemyD.Text = "Live";
-            // 
-            // EnemyB
-            // 
-            this.EnemyB.AutoSize = true;
-            this.EnemyB.Font = new System.Drawing.Font("PMingLiU", 10F);
-            this.EnemyB.Location = new System.Drawing.Point(71, 122);
-            this.EnemyB.Name = "EnemyB";
-            this.EnemyB.Size = new System.Drawing.Size(32, 14);
-            this.EnemyB.TabIndex = 23;
-            this.EnemyB.Text = "Live";
-            // 
-            // EnemyP
-            // 
-            this.EnemyP.AutoSize = true;
-            this.EnemyP.Font = new System.Drawing.Font("PMingLiU", 10F);
-            this.EnemyP.Location = new System.Drawing.Point(71, 242);
-            this.EnemyP.Name = "EnemyP";
-            this.EnemyP.Size = new System.Drawing.Size(32, 14);
-            this.EnemyP.TabIndex = 26;
-            this.EnemyP.Text = "Live";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("PMingLiU", 10F);
-            this.label6.Location = new System.Drawing.Point(6, 242);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(39, 14);
-            this.label6.TabIndex = 20;
-            this.label6.Text = "Patrol";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("PMingLiU", 10F);
-            this.label7.Location = new System.Drawing.Point(6, 162);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 14);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "Submarine";
-            // 
-            // EnemyA
-            // 
-            this.EnemyA.AutoSize = true;
-            this.EnemyA.Font = new System.Drawing.Font("PMingLiU", 10F);
-            this.EnemyA.Location = new System.Drawing.Point(71, 82);
-            this.EnemyA.Name = "EnemyA";
-            this.EnemyA.Size = new System.Drawing.Size(32, 14);
-            this.EnemyA.TabIndex = 22;
-            this.EnemyA.Text = "Live";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("PMingLiU", 10F);
-            this.label9.Location = new System.Drawing.Point(6, 82);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(48, 14);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "Aircraft";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("PMingLiU", 10F);
-            this.label12.Location = new System.Drawing.Point(6, 122);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(63, 14);
-            this.label12.TabIndex = 18;
-            this.label12.Text = "Battleship";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("PMingLiU", 10F);
-            this.label16.Location = new System.Drawing.Point(6, 202);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(59, 14);
-            this.label16.TabIndex = 19;
-            this.label16.Text = "Destroyer";
             // 
             // Form1
             // 
